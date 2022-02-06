@@ -3,9 +3,9 @@
  */
 package jp.co.yumemi.android.codeCheck
 
-import android.content.Context
+import android.app.Application
 import android.os.Parcelable
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.AndroidViewModel
 import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.engine.android.*
@@ -21,15 +21,17 @@ import org.json.JSONObject
 import java.util.*
 
 // TwoFragment で使う
-class OneViewModel(val context: Context) : ViewModel() {
+class OneViewModel(application: Application) : AndroidViewModel(application) {
+
 
     // 検索結果
     fun searchResults(inputText: String): List<Item> = runBlocking {
 
+        val context = getApplication<Application>().applicationContext
         val client = HttpClient(Android)
 
         return@runBlocking GlobalScope.async {
-            val response: HttpResponse = client?.get("https://api.github.com/search/repositories") {
+            val response: HttpResponse = client.get("https://api.github.com/search/repositories") {
                 header("Accept", "application/vnd.github.v3+json")
                 parameter("q", inputText)
             }

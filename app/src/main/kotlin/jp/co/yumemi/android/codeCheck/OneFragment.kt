@@ -3,6 +3,7 @@
  */
 package jp.co.yumemi.android.codeCheck
 
+import android.app.Application
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -22,7 +23,7 @@ class OneFragment: Fragment(R.layout.fragment_one){
 
         val binding = FragmentOneBinding.bind(view)
 
-        val viewModel = OneViewModel(requireContext())
+        val viewModel = OneViewModel(requireContext() as Application)
 
         val layoutManager = LinearLayoutManager(context)
         val dividerItemDecoration = DividerItemDecoration(context, layoutManager.orientation)
